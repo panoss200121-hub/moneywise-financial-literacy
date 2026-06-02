@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: #f7fbff;
+  color: #14213d;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--rotate, 0deg));
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(var(--rotate, 0deg));
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.float-soft {
+  animation: float-soft 5.8s ease-in-out infinite;
+}
+
+.float-soft-delay {
+  animation: float-soft 6.8s ease-in-out 0.9s infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 5s ease-in-out infinite;
+}
