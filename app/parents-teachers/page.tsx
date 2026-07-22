@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpenCheck, Home, MessageCircleQuestion, Printer, ShieldCheck, UsersRound } from "lucide-react";
+import { BookOpenCheck, ExternalLink, Home, Landmark, MessageCircleQuestion, Printer, ShieldCheck, UsersRound } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { EducationalSources } from "@/components/EducationalSources";
+import { axiaSummary, axiaUrl, instituteAttribution, instituteSummary, instituteUrl } from "@/data/institute";
 import { learningWorlds } from "@/data/curriculum";
 import { useI18n } from "@/lib/i18n";
 import { useProgress } from "@/lib/progress";
@@ -85,6 +87,29 @@ export default function ParentsTeachersPage() {
         </div>
       </section>
 
+      <section className="mt-6 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <article className="rounded-[2rem] bg-gradient-to-br from-[#e6fbf5] to-white p-6 shadow-soft">
+          <Landmark className="h-8 w-8 text-mint" />
+          <h2 className="mt-4 text-3xl font-black text-ink">{lang === "el" ? "Εκπαιδευτική βάση" : "Educational foundation"}</h2>
+          <p className="mt-4 leading-8 text-ink/65">{instituteSummary[lang]}</p>
+          <p className="mt-3 leading-8 text-ink/65">{axiaSummary[lang]}</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <a href={instituteUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-black text-white">
+              gfli.gr
+              <ExternalLink className="h-4 w-4" />
+            </a>
+            <a href={axiaUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-black text-ink shadow-soft">
+              {lang === "el" ? "Πρόγραμμα @ξία" : "@ξία Programme"}
+              <ExternalLink className="h-4 w-4" />
+            </a>
+          </div>
+        </article>
+        <article className="rounded-[2rem] bg-white p-6 shadow-soft">
+          <h2 className="text-3xl font-black text-ink">{lang === "el" ? "Απόδοση πηγών" : "Source attribution"}</h2>
+          <p className="mt-4 rounded-[1.25rem] bg-cloud p-5 leading-8 text-ink/68">{instituteAttribution[lang]}</p>
+        </article>
+      </section>
+
       <section className="mt-6 grid gap-4 lg:grid-cols-2">
         <article className="rounded-[2rem] bg-gradient-to-br from-[#fff7dd] to-white p-6 shadow-soft">
           <Printer className="h-8 w-8 text-sun" />
@@ -113,6 +138,10 @@ export default function ParentsTeachersPage() {
           {lang === "el" ? "Το περιεχόμενο είναι πρωτότυπο, ηλικιακά κατάλληλο και βασίζεται σε γενικά αποδεκτές έννοιες οικονομικής παιδείας. Τα σενάρια, οι αποδόσεις και τα νομίσματα είναι φανταστικά όπου χρειάζεται και δεν αποτελούν προσωπική οικονομική ή επενδυτική συμβουλή." : "Content is original, age-appropriate and based on generally accepted financial literacy concepts. Scenarios, returns and currencies are fictional where needed and are not personal financial or investment advice."}
         </p>
       </section>
+
+      <div className="mt-6">
+        <EducationalSources />
+      </div>
     </AppShell>
   );
 }

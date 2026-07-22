@@ -247,6 +247,34 @@ export const learningWorlds: LearningWorld[] = [
               ])
             ],
             ["currency", "cash", "bank"]
+          ),
+          lesson(
+            "money-explorer",
+            "money-basics",
+            "financial-vocabulary-practice",
+            "practice",
+            "starter",
+            "Παιχνίδι οικονομικών λέξεων",
+            "Financial vocabulary game",
+            "Εξάσκησε βασικούς όρους που θα συναντήσεις σε όλη τη διαδρομή.",
+            "Practice key terms you will meet across the path.",
+            [
+              ex("vocabulary-flashcard", "flashcard", "Κάρτα: Τι σημαίνει «έσοδο»;", "Card: What does income mean?", "Έσοδο είναι χρήματα που μπαίνουν στο πορτοφόλι ή στον προϋπολογισμό, όπως χαρτζιλίκι ή δώρο.", "Income is money that comes into a wallet or budget, such as allowance or a gift.", ["vocabulary", "income"]),
+              ex("vocabulary-pairs", "matchPairs", "Ταίριαξε τον όρο με τη σωστή ιδέα.", "Match the term with the correct idea.", "Το οικονομικό λεξιλόγιο βοηθά να εξηγούμε αποφάσεις με καθαρές λέξεις.", "Financial vocabulary helps explain decisions with clear words.", ["vocabulary"], [
+                option("income", "Έσοδο", "Income", true, undefined, "money-in"),
+                option("money-in", "Χρήματα που μπαίνουν", "Money coming in", true, undefined, "income"),
+                option("expense", "Έξοδο", "Expense", true, undefined, "money-out"),
+                option("money-out", "Χρήματα που φεύγουν", "Money going out", true, undefined, "expense")
+              ]),
+              ex("term-choice", "singleChoice", "Ποια λέξη ταιριάζει με χρήματα που κρατάμε για μελλοντικό στόχο;", "Which word fits money kept for a future goal?", "Η αποταμίευση κρατά χρήματα για κάτι που θέλουμε ή χρειαζόμαστε αργότερα.", "Saving keeps money for something we want or need later.", ["vocabulary", "saving"], [
+                option("saving", "Αποταμίευση", "Saving", true),
+                option("inflation", "Πληθωρισμός", "Inflation"),
+                option("advertising", "Διαφήμιση", "Advertising")
+              ])
+            ],
+            ["income", "expense", "saving", "budget"],
+            25,
+            14
           )
         ]
       }

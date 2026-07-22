@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Clock, Coins, ListChecks } from "lucide-react";
+import { EducationalSources } from "@/components/EducationalSources";
 import { AppShell } from "@/components/AppShell";
 import { LessonEngine } from "@/components/LessonEngine";
 import { getLessonById } from "@/data/curriculum";
@@ -31,6 +32,9 @@ export default function LessonRunPage({ params }: { params: { lessonId: string }
         </div>
       </section>
       <LessonEngine lesson={lesson} />
+      <div className="mt-5">
+        <EducationalSources compact />
+      </div>
     </AppShell>
   );
 }

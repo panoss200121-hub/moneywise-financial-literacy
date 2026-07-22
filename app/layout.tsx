@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AppFooter } from "@/components/AppFooter";
 import { AppHeader } from "@/components/AppHeader";
 import { I18nProvider } from "@/lib/i18n";
 import { ProgressProvider } from "@/lib/progress";
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <ProgressProvider>
             <AppHeader />
             {children}
+            <AppFooter />
           </ProgressProvider>
         </I18nProvider>
       </body>

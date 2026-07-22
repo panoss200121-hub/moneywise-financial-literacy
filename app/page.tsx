@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpenCheck, Brain, CheckCircle2, Gamepad2, GraduationCap, ShieldCheck, Sparkles, Trophy, UsersRound } from "lucide-react";
+import { ArrowRight, BookOpenCheck, Brain, CheckCircle2, ExternalLink, Gamepad2, GraduationCap, Landmark, ShieldCheck, Sparkles, Trophy, UsersRound } from "lucide-react";
 import { FeatureCard } from "@/components/FeatureCard";
 import { HeroSection } from "@/components/HeroSection";
 import { lessonLevels } from "@/data/lessons";
+import { axiaSummary, instituteAttribution, instituteSummary, instituteUrl } from "@/data/institute";
 import { useI18n } from "@/lib/i18n";
 
 const featureIcons = [BookOpenCheck, Gamepad2, Trophy, ShieldCheck, UsersRound];
@@ -20,7 +21,7 @@ function localizedLevels(lessonsText: readonly (readonly string[])[]) {
 }
 
 export default function HomePage() {
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   const levels = localizedLevels(t.lessons);
 
   return (
@@ -99,6 +100,33 @@ export default function HomePage() {
                 <p className="mt-3 text-sm leading-6 text-ink/60">{level.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+        <div className="grid gap-8 rounded-[2rem] bg-gradient-to-br from-[#e6fbf5] via-white to-[#fff7dd] p-7 shadow-premium lg:grid-cols-[0.85fr_1.15fr] lg:items-center sm:p-9">
+          <div className="relative min-h-64 overflow-hidden rounded-[1.75rem] bg-ink p-6 text-white shadow-soft">
+            <div className="absolute right-6 top-6 grid h-16 w-16 place-items-center rounded-3xl bg-white/10">
+              <Landmark className="h-8 w-8 text-mint" />
+            </div>
+            <p className="font-black uppercase text-mint">{t.home.educationalFoundationEyebrow}</p>
+            <h2 className="mt-4 max-w-sm text-4xl font-black">{t.home.educationalFoundationTitle}</h2>
+            <p className="mt-5 max-w-md leading-8 text-white/72">{instituteSummary[lang]}</p>
+            <a href={instituteUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-black text-ink">
+              gfli.gr
+              <ExternalLink className="h-4 w-4" />
+            </a>
+          </div>
+          <div>
+            <p className="text-sm font-black uppercase text-ink/45">{lang === "el" ? "Εκπαιδευτική σύνδεση" : "Educational connection"}</p>
+            <h3 className="mt-3 text-3xl font-black text-ink sm:text-4xl">{lang === "el" ? "Θεματικές εμπνευσμένες από δημόσιο εκπαιδευτικό έργο." : "Themes informed by public educational work."}</h3>
+            <p className="mt-4 text-lg leading-8 text-ink/65">{axiaSummary[lang]}</p>
+            <p className="mt-5 rounded-[1.25rem] bg-white/80 p-5 leading-7 text-ink/68 shadow-soft">{instituteAttribution[lang]}</p>
+            <Link href="/institute" className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-4 font-black text-white">
+              {lang === "el" ? "Μάθε περισσότερα" : "Learn more"}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
