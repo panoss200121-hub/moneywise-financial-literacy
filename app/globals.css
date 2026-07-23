@@ -10,6 +10,40 @@
   box-sizing: border-box;
 }
 
+main,
+section,
+article,
+header,
+footer,
+nav {
+  min-width: 0;
+}
+
+svg {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+a,
+button {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2 {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@media (max-width: 379px) {
+  .moneywise-tagline {
+    display: none;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -30,8 +64,44 @@ button {
   font: inherit;
 }
 
-@media (max-width: 360px) {
-  h1 { overflow-wrap: anywhere; }
+.public-home > section:first-child h1 {
+  font-size: clamp(2.25rem, 10.5vw, 4.5rem);
+  line-height: 1.08;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.public-home > section:first-child h1 + p + div + div {
+  color: rgba(20, 33, 61, 0.76);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 430px) {
+  .public-home > section:first-child h1 {
+    font-size: clamp(1.85rem, 8.3vw, 2.25rem);
+  }
+
+  .public-home > section:first-child > div {
+    gap: 2rem;
+    padding: 2.5rem 1rem 3rem;
+  }
+
+  .public-home > section:first-child h1 + p {
+    margin-top: 1.25rem;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  .public-home > section:first-child h1 + p + div {
+    margin-top: 1.5rem;
+  }
+
+  .public-home > section:first-child h1 + p + div + div {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+  }
 }
 
 a,

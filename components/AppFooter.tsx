@@ -5,11 +5,14 @@ import { ExternalLink, GraduationCap } from "lucide-react";
 import { footerAttribution, independentNote, instituteUrl } from "@/data/institute";
 import { useI18n } from "@/lib/i18n";
 import { usePathname } from "next/navigation";
+import { PublicFooter } from "@/components/PublicFooter";
 
 export function AppFooter() {
   const { lang } = useI18n();
   const pathname = usePathname();
   if (pathname.startsWith("/lesson/")) return null;
+  const publicMode = ["/", "/onboarding", "/curriculum", "/tools", "/families", "/educators", "/adults", "/methodology", "/institute", "/about", "/faq", "/glossary"].some((route) => pathname === route);
+  if (publicMode) return <PublicFooter />;
 
   return (
     <footer className="border-t border-ink/10 bg-white">

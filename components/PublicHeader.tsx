@@ -1,0 +1,22 @@
+"use client";
+import Link from "next/link";
+import { Check, Languages, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { Logo } from "@/components/Logo";
+import { useI18n } from "@/lib/i18n";
+import type { Lang } from "@/lib/dictionary";
+
+const links=[
+ {href:"/",el:"Αρχική",en:"Home"},{href:"/onboarding",el:"Διαδρομές μάθησης",en:"Learning paths"},
+ {href:"/curriculum",el:"Πρόγραμμα",en:"Programme"},{href:"/tools",el:"Εργαλεία",en:"Tools"},
+ {href:"/families",el:"Οικογένειες",en:"Families"},{href:"/educators",el:"Εκπαιδευτικοί",en:"Educators"},
+ {href:"/institute",el:"Εκπαιδευτική βάση",en:"Educational foundation"}
+];
+export function PublicHeader(){
+ const pathname=usePathname();const{lang,setLang,t}=useI18n();const[menuOpen,setMenuOpen]=useState(false);const[languageOpen,setLanguageOpen]=useState(false);const menuButtonRef=useRef<HTMLButtonElement>(null);const menuId="public-mobile-menu";
+ const languages:Array<{value:Lang;label:string}>=[{value:"el",label:"Ελληνικά"},{value:"en",label:"English"}];
+ function closeMenu(restoreFocus=true){setMenuOpen(false);if(restoreFocus)requestAnimationFrame(()=>menuButtonRef.current?.focus())}
+ useEffect(()=>{if(!menuOpen)return;const previous=document.body.style.overflow;document.body.style.overflow="hidden";function onKeyDown(event:KeyboardEvent){if(event.key==="Escape")closeMenu()}document.addEventListener("keydown",onKeyDown);return()=>{document.body.style.overflow=previous;document.removeEventListener("keydown",onKeyDown)}},[menuOpen]);
+ return <header className="sticky top-0 z-50 border-b border-ink/10 bg-white/95 backdrop-blur-xl"><div className="mx-auto flex min-h-[72px] max-w-7xl items-center justify-between gap-1.5 px-3 sm:gap-3 sm:px-4 lg:px-8"><div className="min-w-0 shrink"><Logo tagline={t.nav.tagline}/></div><nav className="hidden items-center gap-0.5 xl:flex" aria-label={lang==="el"?"Κύρια πλοήγηση":"Primary navigation"}>{links.map(link=><Link key={link.href} href={link.href} aria-current={pathname===link.href?"page":undefined} className={`rounded-lg px-3 py-2 text-sm font-bold transition ${pathname===link.href?"bg-cloud text-ink":"text-ink/65 hover:bg-cloud hover:text-ink"}`}>{link[lang]}</Link>)}</nav><div className="flex shrink-0 items-center gap-1.5 sm:gap-2"><div className="relative"><button onClick={()=>setLanguageOpen(v=>!v)} className="inline-flex h-11 min-w-11 items-center justify-center rounded-xl border border-ink/10 bg-white px-2.5 text-sm font-bold sm:gap-2 sm:px-3" aria-label={t.nav.language} aria-expanded={languageOpen}><Languages className="h-4 w-4"/><span className="hidden sm:inline">{languages.find(x=>x.value===lang)?.label}</span></button>{languageOpen&&<div className="absolute right-0 top-[calc(100%+8px)] w-44 rounded-xl border border-ink/10 bg-white p-2 shadow-premium">{languages.map(item=><button key={item.value} onClick={()=>{setLang(item.value);setLanguageOpen(false)}} className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 text-left text-sm font-bold hover:bg-cloud">{item.label}{lang===item.value&&<Check className="h-4 w-4 text-mint"/>}</button>)}</div>}</div><Link href="/onboarding" className="hidden min-h-11 items-center rounded-xl bg-ink px-4 text-sm font-extrabold text-white sm:inline-flex">{lang==="el"?"Ξεκίνα τη μάθηση":"Start learning"}</Link><button ref={menuButtonRef} onClick={()=>menuOpen?closeMenu(false):setMenuOpen(true)} className="grid h-11 w-11 place-items-center rounded-xl bg-ink text-white xl:hidden" aria-label={menuOpen?(lang==="el"?"Κλείσιμο μενού":"Close menu"):(lang==="el"?"Άνοιγμα μενού":"Open menu")} aria-expanded={menuOpen} aria-controls={menuId}>{menuOpen?<X className="h-5 w-5"/>:<Menu className="h-5 w-5"/>}</button></div></div>{menuOpen&&<nav id={menuId} className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-ink/10 bg-white px-4 py-4 xl:hidden" aria-label={lang==="el"?"Μενού για κινητό":"Mobile menu"}><div className="mx-auto grid max-w-7xl gap-1">{links.map(link=><Link key={link.href} href={link.href} onClick={()=>closeMenu(false)} className={`min-h-12 rounded-xl px-4 py-3 font-bold ${pathname===link.href?"bg-cloud":"text-ink/70"}`}>{link[lang]}</Link>)}<Link href="/onboarding" onClick={()=>closeMenu(false)} className="mt-2 inline-flex min-h-12 items-center justify-center rounded-xl bg-ink px-5 font-extrabold text-white sm:hidden">{lang==="el"?"Ξεκίνα τη μάθηση":"Start learning"}</Link></div></nav>}</header>
+}

@@ -2,13 +2,13 @@ import { Banknote, BookOpen, BriefcaseBusiness, GraduationCap, HeartHandshake, P
 
 export function LifeStagesVisual() {
   return (
-    <div className="relative min-h-[390px] overflow-hidden rounded-[2rem] bg-[#eaf6f7] p-5 sm:min-h-[450px] sm:p-8" role="img" aria-label="Μαθησιακή διαδρομή από τις πρώτες έννοιες του χρήματος έως τον σχεδιασμό του μέλλοντος">
+    <div className="relative min-h-[330px] overflow-hidden rounded-[1.5rem] bg-[#eaf6f7] p-4 sm:min-h-[450px] sm:rounded-[2rem] sm:p-8" role="img" aria-label="Μαθησιακή διαδρομή από τις πρώτες έννοιες του χρήματος έως τον σχεδιασμό του μέλλοντος">
       <div className="absolute inset-x-8 top-1/2 h-2 -translate-y-1/2 rounded-full bg-white shadow-soft" />
-      <div className="absolute left-[12%] right-[12%] top-1/2 flex -translate-y-1/2 justify-between">
+      <div className="absolute left-[8%] right-[8%] top-1/2 flex -translate-y-1/2 justify-between sm:left-[12%] sm:right-[12%]">
         {[PiggyBank, Smartphone, BriefcaseBusiness, UsersRound].map((Icon, index) => (
           <div key={index} className="relative">
-            <span className={`grid h-16 w-16 place-items-center rounded-[1.35rem] border-4 border-white shadow-premium sm:h-20 sm:w-20 ${index === 0 ? "bg-[#ffd875] text-[#755000]" : index === 1 ? "bg-[#a9dfe7] text-[#14526a]" : index === 2 ? "bg-[#ffb7a6] text-[#782d27]" : "bg-[#9dd9ca] text-[#164f45]"}`}>
-              <Icon className="h-8 w-8 sm:h-10 sm:w-10" />
+            <span className={`grid h-12 w-12 place-items-center rounded-xl border-[3px] border-white shadow-premium sm:h-20 sm:w-20 sm:rounded-[1.35rem] sm:border-4 ${index === 0 ? "bg-[#ffd875] text-[#755000]" : index === 1 ? "bg-[#a9dfe7] text-[#14526a]" : index === 2 ? "bg-[#ffb7a6] text-[#782d27]" : "bg-[#9dd9ca] text-[#164f45]"}`}>
+              <Icon className="h-6 w-6 sm:h-10 sm:w-10" />
             </span>
             <span className="absolute left-1/2 top-[calc(100%+12px)] -translate-x-1/2 whitespace-nowrap text-xs font-extrabold text-ink/65 sm:text-sm">
               {["6–12", "13–17", "18–54", "55+"][index]}
@@ -16,15 +16,15 @@ export function LifeStagesVisual() {
           </div>
         ))}
       </div>
-      <div className="absolute left-6 top-6 rounded-2xl bg-white px-4 py-3 shadow-soft sm:left-9 sm:top-9">
+      <div className="absolute left-4 top-4 rounded-xl bg-white px-3 py-2.5 shadow-soft sm:left-9 sm:top-9 sm:rounded-2xl sm:px-4 sm:py-3">
         <p className="text-xs font-extrabold text-ink/50">MONEYWISE</p>
         <p className="mt-1 font-black text-ink">Μαθαίνω για τη ζωή</p>
       </div>
-      <div className="absolute bottom-6 right-6 flex items-center gap-3 rounded-2xl bg-ink p-4 text-white shadow-premium sm:bottom-9 sm:right-9">
+      <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-xl bg-ink p-3 text-white shadow-premium sm:bottom-9 sm:right-9 sm:gap-3 sm:rounded-2xl sm:p-4">
         <Target className="h-7 w-7 text-sun" />
         <div><p className="text-xs font-bold text-white/60">ΕΠΟΜΕΝΟ ΒΗΜΑ</p><p className="font-black">Ο δικός σου στόχος</p></div>
       </div>
-      <span className="absolute right-8 top-8 grid h-12 w-12 place-items-center rounded-full bg-white text-mint shadow-soft"><BookOpen /></span>
+      <span className="absolute right-8 top-8 hidden h-12 w-12 place-items-center rounded-full bg-white text-mint shadow-soft sm:grid"><BookOpen /></span>
     </div>
   );
 }

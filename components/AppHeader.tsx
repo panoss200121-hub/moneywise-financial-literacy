@@ -8,6 +8,7 @@ import { Logo } from "@/components/Logo";
 import { useI18n } from "@/lib/i18n";
 import { useProgress } from "@/lib/progress";
 import type { Lang } from "@/lib/dictionary";
+import { PublicHeader } from "@/components/PublicHeader";
 
 export const appNavItems = [
   { href: "/dashboard", key: "learn", el: "Πίνακας μάθησης", en: "Learning", icon: Route },
@@ -29,8 +30,9 @@ export function AppHeader() {
     { value: "en", label: "English" }
   ];
   const lessonMode = pathname.startsWith("/lesson/");
-  const publicMode = ["/", "/onboarding", "/curriculum", "/tools", "/families", "/educators", "/adults", "/methodology", "/institute", "/about", "/faq"].some((route) => pathname === route);
+  const publicMode = ["/", "/onboarding", "/curriculum", "/tools", "/families", "/educators", "/adults", "/methodology", "/institute", "/about", "/faq", "/glossary"].some((route) => pathname === route);
   if (lessonMode) return null;
+  if (publicMode) return <PublicHeader />;
 
   return (
     <header className="sticky top-0 z-50 border-b border-ink/10 bg-white/92 backdrop-blur-2xl">
