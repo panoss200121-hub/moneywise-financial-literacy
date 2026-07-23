@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Award, BookOpen, Check, ChevronDown, Flame, Gauge, Languages, Library, Medal, Route, Settings, Target, UsersRound, WalletCards, Wrench } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { useI18n } from "@/lib/i18n";
 import { useProgress } from "@/lib/progress";
@@ -18,6 +19,7 @@ export const appNavItems = [
 ];
 
 export function AppHeader() {
+  const pathname = usePathname();
   const { lang, setLang, t } = useI18n();
   const { progress, level, dailyProgress, resetProgress } = useProgress();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
@@ -26,36 +28,45 @@ export function AppHeader() {
     { value: "el", label: "Ελληνικά" },
     { value: "en", label: "English" }
   ];
+  const lessonMode = pathname.startsWith("/lesson/");
+  const publicMode = ["/", "/onboarding", "/curriculum", "/tools", "/families", "/educators", "/adults", "/methodology", "/institute", "/about", "/faq"].some((route) => pathname === route);
+  if (lessonMode) return null;
 
   return (
     <header className="sticky top-0 z-50 border-b border-ink/10 bg-white/92 backdrop-blur-2xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:px-8">
         <Logo tagline={t.nav.tagline} />
-        <nav className="hidden items-center gap-1 rounded-full bg-cloud p-1 shadow-soft lg:flex" aria-label="Primary">
-          {appNavItems.map((item) => (
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+          {(publicMode ? [
+            { href: "/onboarding", el: "Διαδρομές", en: "Learning paths", icon: Route },
+            { href: "/curriculum", el: "Πρόγραμμα", en: "Programme", icon: BookOpen },
+            { href: "/tools", el: "Εργαλεία", en: "Tools", icon: Wrench },
+            { href: "/families", el: "Οικογένειες", en: "Families", icon: UsersRound },
+            { href: "/educators", el: "Εκπαιδευτικοί", en: "Educators", icon: Library },
+            { href: "/institute", el: "Εκπαιδευτική βάση", en: "Foundation", icon: Award }
+          ] : appNavItems).map((item) => (
             <Link key={item.href} href={item.href} className="inline-flex items-center gap-2 rounded-full px-3 py-2.5 text-sm font-bold text-ink/70 transition hover:bg-white hover:text-ink">
-              <item.icon className="h-4 w-4" />
               {lang === "el" ? item.el : item.en}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-2 rounded-full bg-[#fff7dd] px-3 py-2 text-sm font-black text-ink sm:flex">
+          {!publicMode && <div className="hidden items-center gap-2 rounded-full bg-[#fff7dd] px-3 py-2 text-sm font-black text-ink sm:flex">
             <Flame className="h-4 w-4 text-coral" />
             {progress.streak}
-          </div>
-          <div className="hidden items-center gap-2 rounded-full bg-mint/12 px-3 py-2 text-sm font-black text-ink md:flex">
+          </div>}
+          {!publicMode && <div className="hidden items-center gap-2 rounded-full bg-mint/12 px-3 py-2 text-sm font-black text-ink md:flex">
             <Award className="h-4 w-4 text-mint" />
             {progress.xp} XP
-          </div>
-          <div className="hidden items-center gap-2 rounded-full bg-sun/25 px-3 py-2 text-sm font-black text-ink md:flex">
+          </div>}
+          {!publicMode && <div className="hidden items-center gap-2 rounded-full bg-sun/25 px-3 py-2 text-sm font-black text-ink md:flex">
             <WalletCards className="h-4 w-4 text-[#9c6b00]" />
             {progress.wiseCoins}
-          </div>
-          <div className="hidden items-center gap-2 rounded-full bg-grape/12 px-3 py-2 text-sm font-black text-ink xl:flex">
+          </div>}
+          {!publicMode && <div className="hidden items-center gap-2 rounded-full bg-grape/12 px-3 py-2 text-sm font-black text-ink xl:flex">
             <Gauge className="h-4 w-4 text-grape" />
             {lang === "el" ? "Επ." : "Lv."} {level} · {dailyProgress}%
-          </div>
+          </div>}
           <div className="relative">
             <button onClick={() => setIsLanguageOpen((value) => !value)} className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-3 text-sm font-extrabold text-ink shadow-soft" aria-label={t.nav.language} aria-expanded={isLanguageOpen}>
               <Languages className="h-4 w-4 text-[#2777c9]" />
@@ -71,7 +82,7 @@ export function AppHeader() {
               ))}
             </div>
           </div>
-          <div className="relative">
+          {!publicMode && <div className="relative">
             <button onClick={() => setIsSettingsOpen((value) => !value)} className="grid h-11 w-11 place-items-center rounded-full bg-ink text-white shadow-soft" aria-label={lang === "el" ? "Ρυθμίσεις" : "Settings"} aria-expanded={isSettingsOpen}>
               <Settings className="h-4 w-4" />
             </button>
@@ -84,10 +95,10 @@ export function AppHeader() {
                 {lang === "el" ? "Αλλαγή μαθησιακής διαδρομής" : "Change learning path"}
               </Link>
             </div>
-          </div>
+          </div>}
           <Link href={`/lesson/${progress.currentLessonId}`} className="hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-premium sm:inline-flex">
             <BookOpen className="h-4 w-4" />
-            {t.nav.start}
+            {publicMode ? (lang === "el" ? "Έναρξη μάθησης" : "Start learning") : t.nav.start}
           </Link>
         </div>
       </div>

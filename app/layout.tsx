@@ -7,7 +7,7 @@ import { ProgressProvider } from "@/lib/progress";
 import { AudienceProvider } from "@/lib/audience";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({ subsets: ["latin", "greek"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Moneywise | Χρηματοοικονομική παιδεία για κάθε ηλικία",

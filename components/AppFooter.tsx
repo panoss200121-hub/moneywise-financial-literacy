@@ -4,9 +4,12 @@ import Link from "next/link";
 import { ExternalLink, GraduationCap } from "lucide-react";
 import { footerAttribution, independentNote, instituteUrl } from "@/data/institute";
 import { useI18n } from "@/lib/i18n";
+import { usePathname } from "next/navigation";
 
 export function AppFooter() {
   const { lang } = useI18n();
+  const pathname = usePathname();
+  if (pathname.startsWith("/lesson/")) return null;
 
   return (
     <footer className="border-t border-ink/10 bg-white">

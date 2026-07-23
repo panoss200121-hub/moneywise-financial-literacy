@@ -10,16 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         ink: "#14213d",
-        mint: "#44c7a1",
-        aqua: "#58c6ff",
-        sun: "#f7c948",
-        coral: "#ff7a7a",
-        grape: "#7757d8",
-        cloud: "#f7fbff"
+        mint: "#238b7b",
+        aqua: "#69a9bf",
+        sun: "#eabf52",
+        coral: "#d86f5f",
+        grape: "#66548f",
+        cloud: "#f3f7f7"
       },
       boxShadow: {
-        premium: "0 24px 80px rgba(20, 33, 61, 0.14)",
-        soft: "0 14px 40px rgba(20, 33, 61, 0.1)"
+        premium: "0 24px 70px rgba(20, 33, 61, 0.12)",
+        soft: "0 10px 30px rgba(20, 33, 61, 0.08)"
       },
       fontFamily: {
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui"]

@@ -19,6 +19,8 @@ body {
   background: #f7fbff;
   color: #14213d;
   overflow-x: hidden;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 input,
@@ -39,6 +41,11 @@ button {
 
 button {
   cursor: pointer;
+}
+
+button:active,
+a:active {
+  transform: translateY(1px);
 }
 
 :focus-visible {
