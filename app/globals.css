@@ -21,6 +21,17 @@ body {
   overflow-x: hidden;
 }
 
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+@media (max-width: 360px) {
+  h1 { overflow-wrap: anywhere; }
+}
+
 a,
 button {
   -webkit-tap-highlight-color: transparent;

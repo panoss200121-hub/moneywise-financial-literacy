@@ -21,7 +21,8 @@ export function AppFooter() {
             <p className="mt-1 max-w-3xl leading-7 text-ink/62">{independentNote[lang]}</p>
           </div>
         </div>
-        <nav className="flex flex-wrap items-center gap-2 lg:justify-end" aria-label="Footer">
+        <nav className="flex max-w-lg flex-wrap items-center gap-2 lg:justify-end" aria-label="Footer">
+          {[["/curriculum","Πρόγραμμα","Curriculum"],["/adults","Ενήλικες","Adults"],["/families","Οικογένειες","Families"],["/educators","Εκπαιδευτικοί","Educators"],["/methodology","Μεθοδολογία","Methodology"],["/about","Σχετικά","About"],["/faq","Συχνές ερωτήσεις","FAQ"]].map(item => <Link key={item[0]} href={item[0]} className="rounded-full bg-cloud px-4 py-2 text-sm font-black text-ink">{lang === "el" ? item[1] : item[2]}</Link>)}
           <Link href="/institute" className="rounded-full bg-cloud px-4 py-2 text-sm font-black text-ink">
             {lang === "el" ? "Ινστιτούτο" : "Institute"}
           </Link>

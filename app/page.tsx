@@ -1,205 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpenCheck, Brain, CheckCircle2, ExternalLink, Gamepad2, GraduationCap, Landmark, ShieldCheck, Sparkles, Trophy, UsersRound } from "lucide-react";
-import { FeatureCard } from "@/components/FeatureCard";
-import { HeroSection } from "@/components/HeroSection";
-import { lessonLevels } from "@/data/lessons";
-import { axiaSummary, instituteAttribution, instituteSummary, instituteUrl } from "@/data/institute";
+import { ArrowRight, BookOpenCheck, Compass, ShieldCheck, UsersRound, Wrench } from "lucide-react";
+import { EducationalFoundation, PillarGrid, audiencePaths } from "@/components/PlatformCards";
 import { useI18n } from "@/lib/i18n";
 
-const featureIcons = [BookOpenCheck, Gamepad2, Trophy, ShieldCheck, UsersRound];
-
-function localizedLevels(lessonsText: readonly (readonly string[])[]) {
-  return lessonLevels.map((lesson, index) => ({
-    ...lesson,
-    title: lessonsText[index][0],
-    description: lessonsText[index][1],
-    difficulty: lessonsText[index][2],
-    badgeLabel: lessonsText[index][3]
-  }));
-}
-
 export default function HomePage() {
-  const { lang, t } = useI18n();
-  const levels = localizedLevels(t.lessons);
+  const { lang } = useI18n();
+  const el = lang === "el";
+  return <main>
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#e8fbf4] via-white to-[#fff4cf]">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:px-8 lg:py-24">
+        <div><p className="font-black uppercase tracking-wider text-mint">Moneywise · {el ? "Μάθηση για τη ζωή" : "Learning for life"}</p><h1 className="mt-4 text-5xl font-black leading-[1.05] text-ink sm:text-7xl">{el ? "Χρηματοοικονομική παιδεία για κάθε ηλικία." : "Financial literacy for every stage of life."}</h1><p className="mt-6 max-w-2xl text-xl leading-9 text-ink/68">{el ? "Κατανοούμε τα χρήματα, οργανώνουμε καλύτερα τις επιλογές μας και αποκτούμε πρακτικές δεξιότητες για κάθε στάδιο της ζωής." : "Understand money, make better decisions and build practical financial skills throughout life."}</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link href="/onboarding" className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 font-black text-white shadow-premium">{el ? "Βρες τη διαδρομή σου" : "Find your path"}<ArrowRight className="h-5 w-5" /></Link><Link href="/curriculum" className="inline-flex items-center justify-center rounded-full border border-ink/15 bg-white px-7 py-4 font-black text-ink">{el ? "Δες το πρόγραμμα" : "View curriculum"}</Link></div><p className="mt-5 text-sm font-bold text-ink/55">{el ? "Δεν χρειάζεται λογαριασμός. Η πρόοδος αποθηκεύεται μόνο στη συσκευή σου." : "No account needed. Progress is stored only on your device."}</p></div>
+        <div className="relative min-h-[390px] rounded-[2.5rem] bg-ink p-7 text-white shadow-premium"><div className="absolute inset-6 rounded-[2rem] border border-white/10" /><div className="relative grid h-full grid-cols-2 gap-4"><div className="rounded-[1.6rem] bg-mint p-5"><Compass className="h-10 w-10" /><p className="mt-14 text-2xl font-black">{el ? "6 μαθησιακές διαδρομές" : "6 learning paths"}</p></div><div className="mt-10 rounded-[1.6rem] bg-sun p-5 text-ink"><BookOpenCheck className="h-10 w-10" /><p className="mt-14 text-2xl font-black">{el ? "12 πυλώνες γνώσης" : "12 knowledge pillars"}</p></div><div className="rounded-[1.6rem] bg-white p-5 text-ink"><Wrench className="h-10 w-10" /><p className="mt-10 text-xl font-black">{el ? "Πρακτικά εργαλεία" : "Practical tools"}</p></div><div className="mt-8 rounded-[1.6rem] bg-grape p-5"><ShieldCheck className="h-10 w-10" /><p className="mt-10 text-xl font-black">{el ? "Ασφαλή σενάρια" : "Safe scenarios"}</p></div></div></div>
+      </div>
+    </section>
 
-  return (
-    <main>
-      <HeroSection />
+    <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8"><p className="font-black uppercase tracking-wider text-grape">{el ? "Για κάθε στάδιο" : "For every stage"}</p><h2 className="mt-3 text-4xl font-black sm:text-5xl">{el ? "Διάλεξε τη διαδρομή που σου ταιριάζει" : "Choose the path that fits you"}</h2><div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{audiencePaths.map(path => <Link key={path.id} href="/onboarding" className={`rounded-[1.75rem] bg-gradient-to-br ${path.tone} p-6 transition hover:-translate-y-1 hover:shadow-premium`}><span className="text-sm font-black">{el ? "Ηλικίες" : "Ages"} {path.ages}</span><h3 className="mt-3 text-2xl font-black">{path.title[lang]}</h3><p className="mt-3 leading-7 text-ink/65">{path.description[lang]}</p><span className="mt-5 inline-flex items-center gap-2 font-black">{el ? "Επιλογή" : "Choose"} <ArrowRight className="h-4 w-4" /></span></Link>)}</div></section>
 
-      <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
-        <div className="mb-9 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-          <div className="max-w-2xl">
-            <p className="font-black uppercase tracking-normal text-mint">{t.home.eyebrow}</p>
-            <h2 className="mt-3 text-4xl font-black text-ink sm:text-5xl">{t.home.featuresTitle}</h2>
-          </div>
-          <Link href="/lesson" className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-3 font-black text-ink shadow-soft">
-            {t.common.exploreLessons}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-          {t.home.features.map((feature, index) => (
-            <FeatureCard
-              key={feature[0]}
-              title={feature[0]}
-              description={feature[1]}
-              icon={featureIcons[index]}
-              tone={index === 0 ? "bg-grape/15 text-grape" : index === 1 ? "bg-aqua/15 text-[#2777c9]" : index === 2 ? "bg-sun/25 text-ink" : index === 3 ? "bg-mint/15 text-mint" : "bg-coral/15 text-coral"}
-            />
-          ))}
-        </div>
-      </section>
+    <section className="bg-white py-16"><div className="mx-auto max-w-7xl px-5 lg:px-8"><p className="font-black uppercase tracking-wider text-mint">{el ? "Ο κύκλος της οικονομικής ζωής" : "The financial life cycle"}</p><h2 className="mt-3 max-w-3xl text-4xl font-black sm:text-5xl">{el ? "Κοινές έννοιες, διαφορετικό βάθος για κάθε ηλικία" : "Shared concepts, different depth for every age"}</h2><p className="mt-4 max-w-3xl text-lg leading-8 text-ink/65">{el ? "Από τις πρώτες έννοιες του χρήματος μέχρι τον οικογενειακό προϋπολογισμό, την ψηφιακή ασφάλεια και τον μακροπρόθεσμο σχεδιασμό." : "From first money concepts to household budgeting, digital safety and long-term planning."}</p><div className="mt-9"><PillarGrid /></div></div></section>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:px-8">
-        <div>
-          <p className="font-black uppercase tracking-normal text-grape">{t.home.whyEyebrow}</p>
-          <h2 className="mt-3 text-4xl font-black text-ink sm:text-5xl">{t.home.whyTitle}</h2>
-          <p className="mt-5 text-lg leading-8 text-ink/65">{t.home.whyBody}</p>
-          <Link href="/parents-teachers" className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-4 font-black text-white shadow-soft">
-            {t.parents.cta}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2">
-          {t.home.whyCards.map((card, index) => (
-            <article key={card[0]} className="overflow-hidden rounded-[1.75rem] bg-white shadow-soft">
-              <div className={`grid h-40 place-items-center bg-gradient-to-br ${index === 0 ? "from-[#ffd6cb] to-[#fff2e0]" : index === 1 ? "from-[#ffe0a3] to-[#fff7dd]" : index === 2 ? "from-[#bff4e5] to-[#dff4ff]" : "from-[#cfe5ff] to-[#e7e2ff]"}`}>
-                {index === 0 ? <Brain className="h-20 w-20 text-ink/70" /> : index === 1 ? <Sparkles className="h-20 w-20 text-sun" /> : index === 2 ? <ShieldCheck className="h-20 w-20 text-mint" /> : <GraduationCap className="h-20 w-20 text-grape" />}
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-black text-ink">{card[0]}</h3>
-                <p className="mt-2 leading-7 text-ink/60">{card[1]}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-7xl px-5 lg:px-8">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div className="max-w-2xl">
-              <p className="font-black uppercase tracking-normal text-mint">{t.nav.learningPath}</p>
-              <h2 className="mt-3 text-4xl font-black text-ink sm:text-5xl">{t.home.levelsTitle}</h2>
-              <p className="mt-4 text-lg leading-8 text-ink/65">{t.home.levelsBody}</p>
-            </div>
-            <Link href="/learning-path" className="inline-flex w-fit rounded-full bg-ink px-6 py-4 font-black text-white shadow-soft">
-              {t.nav.learningPath}
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {levels.slice(0, 8).map((level) => (
-              <div key={level.id} className="rounded-[1.5rem] border border-ink/10 bg-cloud p-5">
-                <div className={`mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br ${level.accent} text-white`}>
-                  <level.icon className="h-6 w-6" />
-                </div>
-                <p className="text-sm font-black text-ink/45">{t.common.level} {level.order}</p>
-                <h3 className="mt-2 text-xl font-black text-ink">{level.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-ink/60">{level.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
-        <div className="grid gap-8 rounded-[2rem] bg-gradient-to-br from-[#e6fbf5] via-white to-[#fff7dd] p-7 shadow-premium lg:grid-cols-[0.85fr_1.15fr] lg:items-center sm:p-9">
-          <div className="relative min-h-64 overflow-hidden rounded-[1.75rem] bg-ink p-6 text-white shadow-soft">
-            <div className="absolute right-6 top-6 grid h-16 w-16 place-items-center rounded-3xl bg-white/10">
-              <Landmark className="h-8 w-8 text-mint" />
-            </div>
-            <p className="font-black uppercase text-mint">{t.home.educationalFoundationEyebrow}</p>
-            <h2 className="mt-4 max-w-sm text-4xl font-black">{t.home.educationalFoundationTitle}</h2>
-            <p className="mt-5 max-w-md leading-8 text-white/72">{instituteSummary[lang]}</p>
-            <a href={instituteUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 font-black text-ink">
-              gfli.gr
-              <ExternalLink className="h-4 w-4" />
-            </a>
-          </div>
-          <div>
-            <p className="text-sm font-black uppercase text-ink/45">{lang === "el" ? "Εκπαιδευτική σύνδεση" : "Educational connection"}</p>
-            <h3 className="mt-3 text-3xl font-black text-ink sm:text-4xl">{lang === "el" ? "Θεματικές εμπνευσμένες από δημόσιο εκπαιδευτικό έργο." : "Themes informed by public educational work."}</h3>
-            <p className="mt-4 text-lg leading-8 text-ink/65">{axiaSummary[lang]}</p>
-            <p className="mt-5 rounded-[1.25rem] bg-white/80 p-5 leading-7 text-ink/68 shadow-soft">{instituteAttribution[lang]}</p>
-            <Link href="/institute" className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-4 font-black text-white">
-              {lang === "el" ? "Μάθε περισσότερα" : "Learn more"}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto grid max-w-7xl gap-6 px-5 py-16 lg:grid-cols-2 lg:px-8">
-        <div className="rounded-[2rem] bg-ink p-8 text-white shadow-premium">
-          <p className="font-black uppercase tracking-normal text-mint">{t.nav.quiz}</p>
-          <h2 className="mt-3 text-4xl font-black">{t.home.quizPreviewTitle}</h2>
-          <p className="mt-4 text-lg leading-8 text-white/70">{t.home.quizPreviewBody}</p>
-          <div className="mt-8 rounded-[1.5rem] bg-white/10 p-5">
-            <p className="text-lg font-black">{t.home.quizPreviewQuestion}</p>
-            <div className="mt-4 grid gap-3">
-              {t.home.quizPreviewAnswers.map((item, index) => (
-                <div key={item} className="flex items-center justify-between rounded-2xl bg-white p-4 font-black text-ink">
-                  {item}
-                  {index === 0 ? <CheckCircle2 className="h-5 w-5 text-mint" /> : <span className="h-5 w-5 rounded-full border border-ink/20" />}
-                </div>
-              ))}
-            </div>
-          </div>
-          <Link href="/quiz" className="mt-8 inline-flex rounded-full bg-white px-6 py-4 font-black text-ink">
-            {t.nav.quiz}
-          </Link>
-        </div>
-
-        <div className="rounded-[2rem] bg-gradient-to-br from-[#eefaff] to-[#f4efff] p-8 shadow-premium">
-          <p className="font-black uppercase tracking-normal text-grape">{t.nav.dashboard}</p>
-          <h2 className="mt-3 text-4xl font-black text-ink">{t.home.dashboardPreviewTitle}</h2>
-          <p className="mt-4 text-lg leading-8 text-ink/65">{t.home.dashboardPreviewBody}</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {[["72%", t.common.totalProgress], ["4", t.common.badgesEarned], ["7", t.common.learningStreak]].map((stat) => (
-              <div key={stat[1]} className="rounded-[1.5rem] bg-white p-5 shadow-soft">
-                <p className="text-3xl font-black text-ink">{stat[0]}</p>
-                <p className="mt-1 text-sm font-bold text-ink/55">{stat[1]}</p>
-              </div>
-            ))}
-          </div>
-          <Link href="/dashboard" className="mt-8 inline-flex rounded-full bg-ink px-6 py-4 font-black text-white">
-            {t.common.viewDashboard}
-          </Link>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
-        <div className="grid gap-8 rounded-[2rem] bg-white p-8 shadow-premium lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <div className="grid h-44 w-44 place-items-center rounded-[2rem] bg-gradient-to-br from-mint to-aqua text-white shadow-premium">
-            <UsersRound className="h-20 w-20" />
-          </div>
-          <div>
-            <p className="font-black uppercase tracking-normal text-mint">{t.nav.parentsTeachers}</p>
-            <h2 className="mt-3 text-4xl font-black text-ink sm:text-5xl">{t.home.parentsTitle}</h2>
-            <p className="mt-5 text-lg leading-8 text-ink/65">{t.home.parentsBody}</p>
-            <Link href="/parents-teachers" className="mt-8 inline-flex rounded-full bg-ink px-6 py-4 font-black text-white">
-              {t.nav.parentsTeachers}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 pb-20 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-[2.2rem] bg-gradient-to-br from-ink via-[#243a68] to-[#4b3fa8] p-10 text-center text-white shadow-premium">
-          <h2 className="mx-auto max-w-3xl text-4xl font-black sm:text-5xl">{t.home.finalCtaTitle}</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-white/70">{t.home.finalCtaBody}</p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link href="/learning-path" className="rounded-full bg-white px-7 py-4 font-black text-ink">
-              {t.common.startLearning}
-            </Link>
-            <Link href="/lesson" className="rounded-full border border-white/20 px-7 py-4 font-black text-white">
-              {t.common.exploreLessons}
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
-  );
+    <section className="mx-auto grid max-w-7xl gap-6 px-5 py-16 lg:grid-cols-3 lg:px-8">{[[UsersRound, el ? "Οικογένειες" : "Families", el ? "Ιδέες συζήτησης και δραστηριότητες για το σπίτι." : "Conversation prompts and activities for home.", "/families"], [BookOpenCheck, el ? "Εκπαιδευτικοί και σχολεία" : "Educators and schools", el ? "Μαθησιακά αποτελέσματα και ιδέες αξιοποίησης στην τάξη." : "Learning outcomes and classroom ideas.", "/educators"], [Wrench, el ? "Πρακτικά εργαλεία" : "Practical tools", el ? "Τοπικοί υπολογισμοί με υποθετικά ή δικά σου ποσά." : "Local calculations with fictional or your own values.", "/tools"]].map(([Icon, title, body, href]) => <Link key={String(href)} href={String(href)} className="rounded-[1.75rem] bg-white p-7 shadow-soft transition hover:-translate-y-1"><Icon className="h-9 w-9 text-mint" /><h2 className="mt-5 text-2xl font-black">{String(title)}</h2><p className="mt-3 leading-7 text-ink/65">{String(body)}</p><span className="mt-5 inline-flex items-center gap-2 font-black">{el ? "Περισσότερα" : "Learn more"} <ArrowRight className="h-4 w-4" /></span></Link>)}</section>
+    <section className="mx-auto max-w-7xl px-5 pb-16 lg:px-8"><EducationalFoundation /></section>
+  </main>;
 }
+

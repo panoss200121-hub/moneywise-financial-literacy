@@ -6,6 +6,8 @@ import { AppShell } from "@/components/AppShell";
 import { learningWorlds, type Lesson } from "@/data/curriculum";
 import { useI18n } from "@/lib/i18n";
 import { useProgress } from "@/lib/progress";
+import { useAudience } from "@/lib/audience";
+import { audiencePaths } from "@/data/platform";
 
 const nodeIcons = {
   lesson: Circle,
@@ -24,22 +26,25 @@ function lessonState(lesson: Lesson, completed: string[], currentLessonId: strin
 export default function DashboardPage() {
   const { lang } = useI18n();
   const { progress, level, mastery } = useProgress();
+  const { profile } = useAudience();
+  const selectedPath = audiencePaths.find((item) => item.id === profile.path);
   let unlockedSoFar = true;
 
   return (
     <AppShell>
+      {!profile.onboarded ? <section className="mb-5 rounded-[1.5rem] bg-sun/30 p-5"><p className="font-black text-ink">{lang === "el" ? "Φτιάξε τη δική σου μαθησιακή διαδρομή σε 3 σύντομα βήματα." : "Create your learning path in 3 short steps."}</p><Link href="/onboarding" className="mt-3 inline-flex rounded-full bg-ink px-5 py-3 font-black text-white">{lang === "el" ? "Έναρξη" : "Start"}</Link></section> : null}
       <section className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-ink via-[#243a68] to-[#286f66] p-6 text-white shadow-premium sm:p-8">
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <div>
-            <p className="font-black uppercase text-mint">{lang === "el" ? "Moneywise διαδρομή" : "Moneywise path"}</p>
-            <h1 className="mt-3 text-4xl font-black sm:text-6xl">{lang === "el" ? "Μάθε χρήματα, απόφαση την απόφαση." : "Learn money, one decision at a time."}</h1>
+            <p className="font-black uppercase text-mint">{selectedPath ? `${lang === "el" ? "Διαδρομή" : "Path"} ${selectedPath.ages}` : (lang === "el" ? "Η διαδρομή σου" : "Your path")}</p>
+            <h1 className="mt-3 text-4xl font-black sm:text-6xl">{selectedPath ? selectedPath.title[lang] : (lang === "el" ? "Μάθε για τα χρήματα, απόφαση την απόφαση." : "Learn money, one decision at a time.")}</h1>
             <p className="mt-4 max-w-2xl text-lg leading-8 text-white/72">
-              {lang === "el" ? "Ολοκλήρωσε κόμβους, ξεκλείδωσε checkpoints και μάζεψε XP χωρίς ποινές που σταματούν τη μάθηση." : "Complete nodes, unlock checkpoints and collect XP without punitive blocks."}
+              {lang === "el" ? "Ολοκλήρωσε μικρά μαθήματα, δοκίμασε πρακτικά σενάρια και κράτησε την πρόοδό σου χωρίς πίεση." : "Complete short lessons, try practical scenarios and keep your progress without pressure."}
             </p>
           </div>
           <div className="grid min-w-64 gap-3 rounded-[1.5rem] bg-white/10 p-4">
             <div className="flex items-center justify-between">
-              <span className="font-black text-white/70">{lang === "el" ? "Μastery" : "Mastery"}</span>
+              <span className="font-black text-white/70">{lang === "el" ? "Πρόοδος" : "Progress"}</span>
               <span className="text-3xl font-black">{mastery}%</span>
             </div>
             <div className="h-3 overflow-hidden rounded-full bg-white/15">
@@ -53,6 +58,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </section>
+      {selectedPath ? <section className="mt-5 rounded-[1.5rem] bg-white p-6 shadow-soft"><p className="text-sm font-black text-grape">{lang === "el" ? `Πρόταση ${profile.minutes} λεπτών` : `${profile.minutes}-minute recommendation`}</p><h2 className="mt-2 text-2xl font-black">{selectedPath.lesson[lang]}</h2><p className="mt-2 text-ink/65">{selectedPath.activity[lang]}</p><Link href={`/lesson/${selectedPath.lessonId}`} className="mt-4 inline-flex rounded-full bg-ink px-5 py-3 font-black text-white">{lang === "el" ? "Συνέχισε τη μάθηση" : "Continue learning"}</Link></section> : null}
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <article className="rounded-[1.5rem] bg-white p-5 shadow-soft">

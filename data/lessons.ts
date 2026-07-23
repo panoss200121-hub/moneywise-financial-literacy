@@ -134,7 +134,7 @@ export const lessonLevels: LessonLevel[] = [
 
 export const featuredLesson = {
   title: "The Birthday Budget",
-  ageRange: "Ages 10-14",
+  ageRange: "Ages 9–17",
   story:
     "Maya received 40 euros for her birthday. She wants a game, a gift for her sister, and to save for a bike light. Her challenge is to choose a plan before Saturday.",
   keyConcept:

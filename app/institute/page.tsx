@@ -56,7 +56,7 @@ export default function InstitutePage() {
               {[
                 [Landmark, lang === "el" ? "Ινστιτούτο" : "Institute", instituteSummary[lang]],
                 [GraduationCap, lang === "el" ? "@ξία" : "@ξία", axiaSummary[lang]],
-                [BookOpenCheck, lang === "el" ? "Παιδιά" : "Children", lang === "el" ? "Η πλατφόρμα μετατρέπει έννοιες σε σύντομες αποστολές για ηλικίες 10-12." : "The platform turns concepts into short missions for ages 10-12."],
+                [BookOpenCheck, lang === "el" ? "Κάθε ηλικία" : "Every age", lang === "el" ? "Η πλατφόρμα μετατρέπει κοινές έννοιες σε προσαρμοσμένες μαθησιακές διαδρομές από 6 ετών έως την ενήλικη ζωή." : "The platform adapts shared concepts into learning paths from age 6 through adult life."],
                 [ShieldCheck, lang === "el" ? "Διάκριση ρόλων" : "Clear roles", independentNote[lang]]
               ].map(([Icon, title, body]) => (
                 <article key={String(title)} className="rounded-[1.5rem] bg-cloud p-5">

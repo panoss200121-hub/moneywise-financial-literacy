@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Award, BookOpen, Check, ChevronDown, Flame, Gauge, Languages, Library, Medal, Rocket, Route, Settings, Target, UsersRound, WalletCards } from "lucide-react";
+import { Award, BookOpen, Check, ChevronDown, Flame, Gauge, Languages, Library, Medal, Route, Settings, Target, UsersRound, WalletCards, Wrench } from "lucide-react";
 import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { useI18n } from "@/lib/i18n";
@@ -9,12 +9,12 @@ import { useProgress } from "@/lib/progress";
 import type { Lang } from "@/lib/dictionary";
 
 export const appNavItems = [
-  { href: "/dashboard", key: "learn", el: "Μάθηση", en: "Learn", icon: Route },
+  { href: "/dashboard", key: "learn", el: "Πίνακας μάθησης", en: "Learning", icon: Route },
   { href: "/practice", key: "practice", el: "Πρακτική", en: "Practice", icon: Target },
-  { href: "/quests", key: "quests", el: "Αποστολές", en: "Quests", icon: Rocket },
+  { href: "/tools", key: "tools", el: "Εργαλεία", en: "Tools", icon: Wrench },
   { href: "/achievements", key: "achievements", el: "Σήματα", en: "Achievements", icon: Medal },
   { href: "/glossary", key: "glossary", el: "Λεξικό", en: "Glossary", icon: Library },
-  { href: "/parents-teachers", key: "parents", el: "Ενήλικες", en: "Adults", icon: UsersRound }
+  { href: "/families", key: "parents", el: "Οικογένειες", en: "Families", icon: UsersRound }
 ];
 
 export function AppHeader() {
@@ -78,8 +78,11 @@ export function AppHeader() {
             <div className={`absolute right-0 top-[calc(100%+10px)] w-64 rounded-3xl border border-ink/10 bg-white p-3 shadow-premium transition ${isSettingsOpen ? "visible translate-y-0 opacity-100" : "invisible translate-y-1 opacity-0"}`}>
               <p className="px-3 py-2 text-sm font-black text-ink">{lang === "el" ? "Demo πρόοδος" : "Demo progress"}</p>
               <button onClick={() => { resetProgress(); setIsSettingsOpen(false); }} className="w-full rounded-2xl bg-coral/12 px-4 py-3 text-left text-sm font-black text-ink hover:bg-coral/18">
-                {lang === "el" ? "Επαναφορά demo προόδου" : "Reset demo progress"}
+                {lang === "el" ? "Επαναφορά προόδου" : "Reset progress"}
               </button>
+              <Link href="/onboarding" onClick={() => setIsSettingsOpen(false)} className="mt-2 block w-full rounded-2xl bg-cloud px-4 py-3 text-sm font-black text-ink">
+                {lang === "el" ? "Αλλαγή μαθησιακής διαδρομής" : "Change learning path"}
+              </Link>
             </div>
           </div>
           <Link href={`/lesson/${progress.currentLessonId}`} className="hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 hover:shadow-premium sm:inline-flex">

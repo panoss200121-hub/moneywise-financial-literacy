@@ -4,13 +4,14 @@ import { AppFooter } from "@/components/AppFooter";
 import { AppHeader } from "@/components/AppHeader";
 import { I18nProvider } from "@/lib/i18n";
 import { ProgressProvider } from "@/lib/progress";
+import { AudienceProvider } from "@/lib/audience";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Moneywise | Χρηματοοικονομική παιδεία για παιδιά",
-  description: "Παιχνιδοποιημένη χρηματοοικονομική εκπαίδευση με μαθήματα, αποστολές, XP, WiseCoins και τοπική mock πρόοδο."
+  title: "Moneywise | Χρηματοοικονομική παιδεία για κάθε ηλικία",
+  description: "Πρακτικά μαθήματα και δραστηριότητες χρηματοοικονομικής παιδείας για κάθε στάδιο της ζωής."
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -18,11 +19,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="el">
       <body className={inter.variable}>
         <I18nProvider>
-          <ProgressProvider>
+          <ProgressProvider><AudienceProvider>
             <AppHeader />
             {children}
             <AppFooter />
-          </ProgressProvider>
+          </AudienceProvider></ProgressProvider>
         </I18nProvider>
       </body>
     </html>

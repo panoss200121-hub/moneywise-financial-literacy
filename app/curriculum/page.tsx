@@ -1,0 +1,5 @@
+"use client";
+import { EducationalFoundation, PageHeader, PathLessonCard, PillarGrid, audiencePaths } from "@/components/PlatformCards";
+import { useI18n } from "@/lib/i18n";
+export default function CurriculumPage(){const {lang}=useI18n();const el=lang==="el";return <main className="mx-auto max-w-7xl px-5 py-8 lg:px-8"><PageHeader eyebrow={el?"Πρόγραμμα μάθησης":"Curriculum"} title={el?"Ο οικονομικός κύκλος, σε κάθε στάδιο της ζωής":"The financial life cycle, at every stage"} body={el?"Δώδεκα κοινοί πυλώνες προσαρμόζονται σε γλώσσα, παραδείγματα, δυσκολία και δραστηριότητες για κάθε διαδρομή.":"Twelve shared pillars adapt language, examples, difficulty and activities to each path."}/><div className="mt-8"><PillarGrid/></div><h2 className="mt-14 text-3xl font-black">{el?"Ένα ολοκληρωμένο πρώτο μάθημα ανά διαδρομή":"One complete first lesson per path"}</h2><div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{audiencePaths.map(path=><PathLessonCard key={path.id} path={path}/>)}</div><div className="mt-10"><EducationalFoundation/></div></main>}
+

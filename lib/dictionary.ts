@@ -44,7 +44,7 @@ export const dictionary = {
       eyebrow: "Πλατφόρμα χρηματοοικονομικής εκπαίδευσης",
       heroTitle: "Οικονομική σκέψη μέσα από μικρές αποστολές.",
       heroSubheadline:
-        "Το Moneywise βοηθά παιδιά 10-12 ετών να κατανοήσουν χρήματα, ανάγκες, αποταμίευση, προϋπολογισμό και ψηφιακή ασφάλεια μέσα από παιχνίδια, ιστορίες και σύντομα κουίζ.",
+        "Το Moneywise βοηθά ανθρώπους κάθε ηλικίας να κατανοήσουν τα χρήματα και να χτίσουν πρακτικές δεξιότητες μέσα από σύντομα μαθήματα, σενάρια και δραστηριότητες.",
       heroStats: {
         level: "Επίπεδο",
         next: "Επόμενο: 65%",
@@ -105,7 +105,7 @@ export const dictionary = {
       progressHelper: "Η πρόοδος αποθηκεύεται τοπικά στη συσκευή για το demo."
     },
     lesson: {
-      eyebrow: "Ηλικίες 10-12",
+      eyebrow: "Για κάθε ηλικία",
       title: "Ο προϋπολογισμός των γενεθλίων",
       intro: "Ένα σύντομο μάθημα για επιλογές, χαρά σήμερα και στόχους για αργότερα.",
       storyTitle: "Κάρτα ιστορίας",
@@ -233,7 +233,7 @@ export const dictionary = {
       eyebrow: "Financial literacy learning platform",
       heroTitle: "Money confidence through small missions.",
       heroSubheadline:
-        "Moneywise helps children ages 10-12 understand money, needs, saving, budgeting and digital safety through games, stories and short quizzes.",
+        "Moneywise helps people of every age understand money and build practical skills through short lessons, scenarios and activities.",
       heroStats: {
         level: "Level",
         next: "Next: 65%",
@@ -294,7 +294,7 @@ export const dictionary = {
       progressHelper: "Progress is saved locally on this device for the demo."
     },
     lesson: {
-      eyebrow: "Ages 10-12",
+      eyebrow: "For every age",
       title: "The Birthday Budget",
       intro: "A short lesson about choices, joy today and goals for later.",
       storyTitle: "Story card",
