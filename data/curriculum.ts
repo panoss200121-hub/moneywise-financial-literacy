@@ -634,7 +634,7 @@ export const weeklyMission: Quest = {
 
 export const achievements: Achievement[] = [
   { id: "first-wise-step", title: tx("Πρώτο Σοφό Βήμα", "First Wise Step"), description: tx("Ολοκλήρωσες το πρώτο μάθημα.", "Completed the first lesson."), icon: "spark", unlockHint: tx("Ολοκλήρωσε οποιοδήποτε μάθημα.", "Complete any lesson.") },
-  { id: "smart-shopper", title: tx("Έξυπνος Αγοραστής", "Smart Shopper"), description: tx("Πέρασες την πρόκληση του supermarket.", "Completed the supermarket challenge."), icon: "basket", unlockHint: tx("Ολοκλήρωσε το Supermarket Challenge.", "Complete the Supermarket Challenge.") },
+  { id: "smart-shopper", title: tx("Έξυπνος Αγοραστής", "Smart Shopper"), description: tx("Ολοκλήρωσες την πρόκληση του σούπερ μάρκετ.", "Completed the supermarket challenge."), icon: "basket", unlockHint: tx("Ολοκλήρωσε την πρόκληση του σούπερ μάρκετ.", "Complete the Supermarket Challenge.") },
   { id: "savings-starter", title: tx("Αρχάριος Αποταμίευσης", "Savings Starter"), description: tx("Έφτιαξες στόχο αποταμίευσης.", "Built a saving goal."), icon: "piggy", unlockHint: tx("Ολοκλήρωσε τον υπολογιστή στόχου.", "Complete the goal calculator.") },
   { id: "budget-builder", title: tx("Χτίστης Προϋπολογισμού", "Budget Builder"), description: tx("Ισορρόπησες έσοδα και έξοδα.", "Balanced income and expenses."), icon: "ledger", unlockHint: tx("Ολοκλήρωσε μάθημα προϋπολογισμού.", "Complete a budgeting lesson.") },
   { id: "banking-explorer", title: tx("Εξερευνητής Τράπεζας", "Banking Explorer"), description: tx("Διάλεξες ασφαλή τρόπο πληρωμής.", "Chose a safe payment method."), icon: "bank", unlockHint: tx("Ολοκλήρωσε τον Τραπεζικό Κόσμο.", "Complete Banking World.") },

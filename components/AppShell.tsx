@@ -7,11 +7,16 @@ import { appNavItems } from "@/components/AppHeader";
 import { dailyQuests, weeklyMission } from "@/data/curriculum";
 import { useI18n } from "@/lib/i18n";
 import { useProgress } from "@/lib/progress";
+import { useAudience } from "@/lib/audience";
+import { getPathwayById } from "@/data/pathways";
 
 export function AppShell({ children, showRightRail = true }: { children: React.ReactNode; showRightRail?: boolean }) {
   const pathname = usePathname();
   const { lang } = useI18n();
   const { progress, level, dailyProgress } = useProgress();
+  const { profile } = useAudience();
+  const pathway = getPathwayById(profile.path);
+  const adultMode = pathway.mode === "adult" || pathway.mode === "accessible";
 
   return (
     <main className="min-h-screen bg-cloud pb-24 lg:pb-0">
@@ -30,19 +35,19 @@ export function AppShell({ children, showRightRail = true }: { children: React.R
           </nav>
           <div className="mt-4 rounded-2xl bg-gradient-to-br from-[#e6fbf5] to-[#fff7dd] p-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-black text-ink">{lang === "el" ? "Επίπεδο" : "Level"} {level}</p>
+              <p className="text-sm font-black text-ink">{adultMode ? pathway.ages : `${lang === "el" ? "Επίπεδο" : "Level"} ${level}`}</p>
               <Sparkles className="h-4 w-4 text-sun" />
             </div>
             <div className="mt-3 h-2 overflow-hidden rounded-full bg-white">
               <div className="h-full rounded-full bg-gradient-to-r from-mint to-aqua" style={{ width: `${Math.min(100, progress.xp % 100)}%` }} />
             </div>
-            <p className="mt-2 text-xs font-bold text-ink/55">{progress.xp % 100}/100 XP</p>
+            <p className="mt-2 text-xs font-bold text-ink/55">{adultMode ? `${progress.completedLessons.length} ${lang === "el" ? "ολοκληρώσεις" : "completed"}` : `${progress.xp % 100}/100 XP`}</p>
           </div>
         </aside>
 
         <section className="min-w-0">{children}</section>
 
-        {showRightRail ? (
+        {showRightRail && !adultMode ? (
           <aside className="sticky top-24 hidden h-fit space-y-4 lg:block">
             <section className="rounded-[1.75rem] bg-ink p-5 text-white shadow-premium">
               <p className="text-sm font-black text-white/55">{lang === "el" ? "Σήμερα" : "Today"}</p>
@@ -93,13 +98,13 @@ export function AppShell({ children, showRightRail = true }: { children: React.R
         ) : null}
       </div>
 
-      <nav className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-6 rounded-[1.4rem] border border-ink/10 bg-white/95 p-1 shadow-premium backdrop-blur lg:hidden" aria-label="Mobile navigation">
-        {appNavItems.slice(0, 6).map((item) => {
+      <nav className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-4 rounded-[1.4rem] border border-ink/10 bg-white/95 p-1 shadow-premium backdrop-blur lg:hidden" aria-label="Mobile navigation">
+        {appNavItems.filter((item) => ["/dashboard", "/practice", "/tools", "/achievements"].includes(item.href)).map((item) => {
           const active = pathname === item.href;
           return (
             <Link key={item.href} href={item.href} className={`grid min-h-12 place-items-center rounded-2xl ${active ? "bg-ink text-white" : "text-ink/55"}`}>
               <item.icon className="h-5 w-5" />
-              <span className="sr-only">{lang === "el" ? item.el : item.en}</span>
+              <span className="text-[10px] font-black">{lang === "el" ? item.el : item.en}</span>
             </Link>
           );
         })}

@@ -9,12 +9,15 @@ import { useI18n } from "@/lib/i18n";
 import { useProgress } from "@/lib/progress";
 import type { Lang } from "@/lib/dictionary";
 import { PublicHeader } from "@/components/PublicHeader";
+import { useAudience } from "@/lib/audience";
+import { getLocalizedText, getPathwayById } from "@/data/pathways";
 
 export const appNavItems = [
-  { href: "/dashboard", key: "learn", el: "Πίνακας μάθησης", en: "Learning", icon: Route },
+  { href: "/dashboard", key: "learn", el: "Μάθηση", en: "Learning", icon: Route },
+  { href: "/learning-path", key: "path", el: "Διαδρομή", en: "Pathway", icon: BookOpen },
   { href: "/practice", key: "practice", el: "Πρακτική", en: "Practice", icon: Target },
   { href: "/tools", key: "tools", el: "Εργαλεία", en: "Tools", icon: Wrench },
-  { href: "/achievements", key: "achievements", el: "Σήματα", en: "Achievements", icon: Medal },
+  { href: "/achievements", key: "achievements", el: "Πρόοδος", en: "Progress", icon: Medal },
   { href: "/glossary", key: "glossary", el: "Λεξικό", en: "Glossary", icon: Library },
   { href: "/families", key: "parents", el: "Οικογένειες", en: "Families", icon: UsersRound }
 ];
@@ -23,6 +26,9 @@ export function AppHeader() {
   const pathname = usePathname();
   const { lang, setLang, t } = useI18n();
   const { progress, level, dailyProgress, resetProgress } = useProgress();
+  const { profile } = useAudience();
+  const pathway = getPathwayById(profile.path);
+  const adultMode = pathway.mode === "adult" || pathway.mode === "accessible";
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const languages: Array<{ value: Lang; label: string }> = [
@@ -53,7 +59,7 @@ export function AppHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          {!publicMode && <div className="hidden items-center gap-2 rounded-full bg-[#fff7dd] px-3 py-2 text-sm font-black text-ink sm:flex">
+          {!publicMode && !adultMode && <div className="hidden items-center gap-2 rounded-full bg-[#fff7dd] px-3 py-2 text-sm font-black text-ink sm:flex">
             <Flame className="h-4 w-4 text-coral" />
             {progress.streak}
           </div>}
@@ -61,13 +67,13 @@ export function AppHeader() {
             <Award className="h-4 w-4 text-mint" />
             {progress.xp} XP
           </div>}
-          {!publicMode && <div className="hidden items-center gap-2 rounded-full bg-sun/25 px-3 py-2 text-sm font-black text-ink md:flex">
+          {!publicMode && !adultMode && <div className="hidden items-center gap-2 rounded-full bg-sun/25 px-3 py-2 text-sm font-black text-ink md:flex">
             <WalletCards className="h-4 w-4 text-[#9c6b00]" />
             {progress.wiseCoins}
           </div>}
           {!publicMode && <div className="hidden items-center gap-2 rounded-full bg-grape/12 px-3 py-2 text-sm font-black text-ink xl:flex">
             <Gauge className="h-4 w-4 text-grape" />
-            {lang === "el" ? "Επ." : "Lv."} {level} · {dailyProgress}%
+            {adultMode ? `${pathway.ages} · ${progress.completedLessons.length} ${lang === "el" ? "ενότητες" : "modules"}` : `${lang === "el" ? "Επίπεδο" : "Level"} ${level} · ${dailyProgress}%`}
           </div>}
           <div className="relative">
             <button onClick={() => setIsLanguageOpen((value) => !value)} className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-3 text-sm font-extrabold text-ink shadow-soft" aria-label={t.nav.language} aria-expanded={isLanguageOpen}>
@@ -89,11 +95,12 @@ export function AppHeader() {
               <Settings className="h-4 w-4" />
             </button>
             <div className={`absolute right-0 top-[calc(100%+10px)] w-64 rounded-3xl border border-ink/10 bg-white p-3 shadow-premium transition ${isSettingsOpen ? "visible translate-y-0 opacity-100" : "invisible translate-y-1 opacity-0"}`}>
-              <p className="px-3 py-2 text-sm font-black text-ink">{lang === "el" ? "Demo πρόοδος" : "Demo progress"}</p>
+              <p className="px-3 py-2 text-sm font-black text-ink">{lang === "el" ? "Ρυθμίσεις μάθησης" : "Learning settings"}</p>
+              <p className="px-3 pb-3 text-xs font-bold text-ink/55">{pathway.ages} · {getLocalizedText(pathway.title, lang)}</p>
               <button onClick={() => { resetProgress(); setIsSettingsOpen(false); }} className="w-full rounded-2xl bg-coral/12 px-4 py-3 text-left text-sm font-black text-ink hover:bg-coral/18">
                 {lang === "el" ? "Επαναφορά προόδου" : "Reset progress"}
               </button>
-              <Link href="/onboarding" onClick={() => setIsSettingsOpen(false)} className="mt-2 block w-full rounded-2xl bg-cloud px-4 py-3 text-sm font-black text-ink">
+              <Link href="/learning-path" onClick={() => setIsSettingsOpen(false)} className="mt-2 block w-full rounded-2xl bg-cloud px-4 py-3 text-sm font-black text-ink">
                 {lang === "el" ? "Αλλαγή μαθησιακής διαδρομής" : "Change learning path"}
               </Link>
             </div>

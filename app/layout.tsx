@@ -19,11 +19,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="el">
       <body className={inter.variable}>
         <I18nProvider>
-          <ProgressProvider><AudienceProvider>
+          <AudienceProvider><ProgressProvider>
             <AppHeader />
             {children}
             <AppFooter />
-          </AudienceProvider></ProgressProvider>
+          </ProgressProvider></AudienceProvider>
         </I18nProvider>
       </body>
     </html>

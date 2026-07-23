@@ -2,6 +2,15 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { achievements, allLessons, dailyQuests, getNextLessonId, type LessonResult, type SavingsGoal } from "@/data/curriculum";
+import { useAudience } from "@/lib/audience";
+import type { PathwayId } from "@/data/pathways";
+
+export type PathwayProgress = {
+  completedLessons: string[];
+  currentLessonId: string;
+  recentActivity: string[];
+  reviewTopics: string[];
+};
 
 export type UserProgress = {
   completedLessons: string[];
@@ -17,6 +26,7 @@ export type UserProgress = {
   languagePreference: "el" | "en";
   lessonResults: LessonResult[];
   perfectLessons: string[];
+  pathwayProgress: Partial<Record<PathwayId, PathwayProgress>>;
 };
 
 type CompleteLessonInput = {
@@ -58,7 +68,8 @@ const defaultProgress: UserProgress = {
   },
   languagePreference: "el",
   lessonResults: [],
-  perfectLessons: []
+  perfectLessons: [],
+  pathwayProgress: {}
 };
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
@@ -76,6 +87,7 @@ function safeParseProgress(raw: string | null): UserProgress {
       lessonResults: Array.isArray(parsed.lessonResults) ? parsed.lessonResults : [],
       perfectLessons: Array.isArray(parsed.perfectLessons) ? parsed.perfectLessons.filter(Boolean) : [],
       questProgress: parsed.questProgress && typeof parsed.questProgress === "object" ? parsed.questProgress : {},
+      pathwayProgress: parsed.pathwayProgress && typeof parsed.pathwayProgress === "object" ? parsed.pathwayProgress : {},
       savingsGoal: {
         ...defaultProgress.savingsGoal,
         ...(parsed.savingsGoal && typeof parsed.savingsGoal === "object" ? parsed.savingsGoal : {})
@@ -112,6 +124,7 @@ function deriveAchievements(next: UserProgress) {
 }
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
+  const { profile } = useAudience();
   const [progress, setProgress] = useState<UserProgress>(defaultProgress);
   const [isReady, setIsReady] = useState(false);
 
@@ -163,7 +176,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
             ...current.lessonResults.filter((result) => result.lessonId !== input.lessonId),
             { lessonId: input.lessonId, accuracy: input.accuracy, mistakes: input.mistakes, completedAt: new Date().toISOString() }
           ],
-          perfectLessons
+          perfectLessons,
+          pathwayProgress: profile.path ? {
+            ...current.pathwayProgress,
+            [profile.path]: {
+              completedLessons: Array.from(new Set([...(current.pathwayProgress[profile.path]?.completedLessons ?? []), input.lessonId])),
+              currentLessonId: getNextLessonId(completedLessons),
+              recentActivity: [input.lessonId, ...(current.pathwayProgress[profile.path]?.recentActivity ?? []).filter((id) => id !== input.lessonId)].slice(0, 6),
+              reviewTopics: Array.from(new Set(input.mistakes))
+            }
+          } : current.pathwayProgress
         };
         return { ...next, achievements: deriveAchievements(next) };
       });
@@ -179,7 +201,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     }
 
     return { progress, level, dailyProgress, mastery, completeLesson, updateSavingsGoal, resetProgress };
-  }, [progress]);
+  }, [profile.path, progress]);
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }
